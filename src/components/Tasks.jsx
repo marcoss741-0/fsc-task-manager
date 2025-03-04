@@ -5,8 +5,11 @@ import SunIcon from "../assets/icons/sun.svg?react";
 import MoonIcon from "../assets/icons/moon.svg?react";
 import AfternoonIcon from "../assets/icons/cloud-sun.svg?react";
 import TaskSeparator from "./TaskSeparator";
+import { useState } from "react";
+import TASKS from "../constants/TASK";
 
 const Tasks = () => {
+  const [tasks, setTasks] = useState(TASKS);
   return (
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
