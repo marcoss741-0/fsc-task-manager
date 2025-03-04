@@ -12,14 +12,14 @@ const TASKS = [
     description:
       "Fazer exercícios do React na FullstackClub para melhorar o aprendizado",
     time: "morning",
-    status: "in_progress",
+    status: "done",
   },
   {
     id: 3,
     title: "Fazer café",
     description: "Fazer café para matar o cansaço",
-    time: "morning",
-    status: "done",
+    time: "afternoon",
+    status: "in_progress",
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const TASKS = [
     title: "Descansar",
     description: "Descansar para melhorar o corpo",
     time: "night",
-    status: "in_progress",
+    status: "not_started",
   },
   {
     id: 6,
