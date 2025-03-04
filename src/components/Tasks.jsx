@@ -11,9 +11,11 @@ import TaskSeparator from "./TaskSeparator";
 import TASKS from "../constants/TASK";
 import TaskItem from "./TaskItem";
 import { toast } from "sonner";
+import AddTaskDialog from "./AddTaskDialog";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS);
+  const [dialogIsOpen, dialogSetIsOpen] = useState(false);
   const morning_tasks = tasks.filter((task) => task.time === "morning");
   const afternoon_tasks = tasks.filter((task) => task.time === "afternoon");
   const night_tasks = tasks.filter((task) => task.time === "night");
@@ -57,6 +59,10 @@ const Tasks = () => {
     setTasks(deletedTask);
     toast.warning("Tarefa deletada com sucesso!");
   };
+
+  const handleCloseDialog = () => {
+    dialogSetIsOpen(false);
+  };
   return (
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
@@ -68,15 +74,23 @@ const Tasks = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="ghost">
+          <Button size="small" variant="ghost">
             Limpar tarefa
             <TrashIcon />
           </Button>
 
-          <Button variant="primary">
+          <Button
+            size="small"
+            variant="primary"
+            onClick={() => dialogSetIsOpen(true)}
+          >
             Nova tarefa
             <AddIcon />
           </Button>
+          <AddTaskDialog
+            isOpen={dialogIsOpen}
+            closeDialog={handleCloseDialog}
+          />
         </div>
       </div>
 

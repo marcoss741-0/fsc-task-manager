@@ -35,7 +35,11 @@ const TaskItem = ({ task, handleTaskClick, handleDeleteTask }) => {
         {task.title}
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="ghost" onClick={() => handleDeleteTask(task)}>
+        <Button
+          variant="ghost"
+          size="small"
+          onClick={() => handleDeleteTask(task)}
+        >
           <TrashIcon />
         </Button>
         <a href="#" className="hover:opacity-80 transition-opacity">
