@@ -1,11 +1,13 @@
-import Button from "./Button";
-import AddIcon from "../assets/icons/Add.svg?react";
-import TrashIcon from "../assets/icons/trash-2.svg?react";
-import SunIcon from "../assets/icons/sun.svg?react";
-import MoonIcon from "../assets/icons/moon.svg?react";
-import AfternoonIcon from "../assets/icons/cloud-sun.svg?react";
-import TaskSeparator from "./TaskSeparator";
 import { useState } from "react";
+import Button from "./Button";
+import {
+  AddIcon,
+  TrashIcon,
+  SunIcon,
+  MoonIcon,
+  AfternoonIcon,
+} from "../assets/icons";
+import TaskSeparator from "./TaskSeparator";
 import TASKS from "../constants/TASK";
 import TaskItem from "./TaskItem";
 import { toast } from "sonner";
