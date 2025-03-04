@@ -10,10 +10,26 @@ import TASKS from "../constants/TASK";
 import TaskItem from "./TaskItem";
 
 const Tasks = () => {
-  const [tasks] = useState(TASKS);
+  const [tasks, setTasks] = useState(TASKS);
   const morning_tasks = tasks.filter((task) => task.time === "morning");
   const afternoon_tasks = tasks.filter((task) => task.time === "afternoon");
   const night_tasks = tasks.filter((task) => task.time === "night");
+
+  const handleTaskClick = (currentTask) => {
+    // console.log("Task clicked is ", currentTask.title);
+    const UpdateTasksStatus = tasks.map((task) => {
+      if (task.id === currentTask.id) {
+        const statusMap = {
+          done: "not_started",
+          not_started: "in_progress",
+          in_progress: "done",
+        };
+        return { ...task, status: statusMap[task.status] };
+      }
+      return task;
+    });
+    setTasks(UpdateTasksStatus);
+  };
   return (
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
@@ -41,21 +57,33 @@ const Tasks = () => {
         <div className="space-y-3">
           <TaskSeparator title="Manhã" icon={<SunIcon />} />
           {morning_tasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskClick={handleTaskClick}
+            />
           ))}
         </div>
 
         <div className="space-y-3 my-6">
           <TaskSeparator title="Tarde" icon={<AfternoonIcon />} />
           {afternoon_tasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskClick={handleTaskClick}
+            />
           ))}
         </div>
 
         <div className="space-y-3">
           <TaskSeparator title="Noite" icon={<MoonIcon />} />
           {night_tasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskClick={handleTaskClick}
+            />
           ))}
         </div>
       </div>
