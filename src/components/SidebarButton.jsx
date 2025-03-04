@@ -8,7 +8,10 @@ const SidebarButton = ({ children, variant }) => {
     }
   };
   return (
-    <a href="#" className={`py-3 px-6 ${getVariantClass()} rounded-lg`}>
+    <a
+      href="#"
+      className={`py-3 px-6 ${getVariantClass()} rounded-lg gap-2 flex align-center`}
+    >
       {children}
     </a>
   );
