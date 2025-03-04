@@ -16,7 +16,6 @@ const Tasks = () => {
   const night_tasks = tasks.filter((task) => task.time === "night");
 
   const handleTaskClick = (currentTask) => {
-    // console.log("Task clicked is ", currentTask.title);
     const UpdateTasksStatus = tasks.map((task) => {
       if (task.id === currentTask.id) {
         const statusMap = {
@@ -29,6 +28,12 @@ const Tasks = () => {
       return task;
     });
     setTasks(UpdateTasksStatus);
+  };
+
+  const handleDeleteTask = (currentTask) => {
+    console.log(currentTask);
+    const deletedTask = tasks.filter((task) => task.id !== currentTask.id);
+    setTasks(deletedTask);
   };
   return (
     <div className="py-16 px-8 w-full">
@@ -61,6 +66,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskClick={handleTaskClick}
+              handleDeleteTask={handleDeleteTask}
             />
           ))}
         </div>
@@ -72,6 +78,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskClick={handleTaskClick}
+              handleDeleteTask={handleDeleteTask}
             />
           ))}
         </div>
@@ -83,6 +90,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskClick={handleTaskClick}
+              handleDeleteTask={handleDeleteTask}
             />
           ))}
         </div>

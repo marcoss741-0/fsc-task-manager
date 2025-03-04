@@ -1,8 +1,10 @@
 import CheckIcon from "../assets/icons/check.svg?react";
 import LoaderIcon from "../assets/icons/loader-circle.svg?react";
 import DetailsIcon from "../assets/icons/Group.svg?react";
+import Button from "./Button";
+import TrashIcon from "../assets/icons/trash-2.svg?react";
 
-const TaskItem = ({ task, handleTaskClick }) => {
+const TaskItem = ({ task, handleTaskClick, handleDeleteTask }) => {
   const getVariantClass = () => {
     switch (task.status) {
       case "done":
@@ -34,9 +36,14 @@ const TaskItem = ({ task, handleTaskClick }) => {
         </label>
         {task.title}
       </div>
-      <a href="#" className="hover:opacity-80 transition-opacity">
-        <DetailsIcon />
-      </a>
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => handleDeleteTask(task)}>
+          <TrashIcon />
+        </Button>
+        <a href="#" className="hover:opacity-80 transition-opacity">
+          <DetailsIcon />
+        </a>
+      </div>
     </div>
   );
 };

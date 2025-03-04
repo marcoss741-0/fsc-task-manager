@@ -1,4 +1,4 @@
-const Button = ({ children, variant }) => {
+const Button = ({ children, variant, ...rest }) => {
   const getVariantClass = () => {
     switch (variant) {
       case "ghost":
@@ -10,6 +10,7 @@ const Button = ({ children, variant }) => {
   return (
     <button
       className={`${getVariantClass()} py-1 px-3 rounded-md text-xs flex items-center font-medium gap-2 hover:opacity-80 transition-colors`}
+      {...rest}
     >
       {children}
     </button>
