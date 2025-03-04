@@ -8,6 +8,7 @@ import TaskSeparator from "./TaskSeparator";
 import { useState } from "react";
 import TASKS from "../constants/TASK";
 import TaskItem from "./TaskItem";
+import { toast } from "sonner";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS);
@@ -18,12 +19,30 @@ const Tasks = () => {
   const handleTaskClick = (currentTask) => {
     const UpdateTasksStatus = tasks.map((task) => {
       if (task.id === currentTask.id) {
-        const statusMap = {
-          done: "not_started",
-          not_started: "in_progress",
-          in_progress: "done",
-        };
-        return { ...task, status: statusMap[task.status] };
+        let newStatus;
+        switch (task.status) {
+          case "done":
+            newStatus = "not_started";
+            toast.warning("Tarefa não concluida!", {
+              style: { color: "crimson" },
+            });
+            break;
+          case "not_started":
+            toast.success("Tarefa em andamento!", {
+              style: { color: "orange" },
+            });
+            newStatus = "in_progress";
+            break;
+          case "in_progress":
+            newStatus = "done";
+            toast.success("Tarefa completada com sucesso!", {
+              style: { color: "forestgreen" },
+            });
+            break;
+          default:
+            newStatus = task.status;
+        }
+        return { ...task, status: newStatus };
       }
       return task;
     });
@@ -34,6 +53,7 @@ const Tasks = () => {
     console.log(currentTask);
     const deletedTask = tasks.filter((task) => task.id !== currentTask.id);
     setTasks(deletedTask);
+    toast.warning("Tarefa deletada com sucesso!");
   };
   return (
     <div className="py-16 px-8 w-full">
