@@ -1,4 +1,6 @@
-export default function SelectInput({ label, ...rest }) {
+import { forwardRef } from "react";
+
+const SelectInput = forwardRef(({ label, ...rest }, ref) => {
   return (
     <>
       <div className="flex flex-col gap-1 w-full space-y-3">
@@ -11,6 +13,7 @@ export default function SelectInput({ label, ...rest }) {
         <select
           type="text"
           className="bg-[#FFFFFF] rounded-lg py-3 px-4 gap-2.5 text-sm text-[#35383E] border border-[#ECECEC] w-full placeholder:text-[#9A9C9F] placeholder:text-sm placeholder:font-normal"
+          ref={ref}
           {...rest}
         >
           <option value="morning">Manhã</option>
@@ -20,4 +23,7 @@ export default function SelectInput({ label, ...rest }) {
       </div>
     </>
   );
-}
+});
+
+SelectInput.displayName = "SelectInput";
+export default SelectInput;

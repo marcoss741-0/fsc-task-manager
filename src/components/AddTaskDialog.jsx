@@ -3,25 +3,29 @@ import Button from "./Button";
 import Input from "./Input";
 import { CSSTransition } from "react-transition-group";
 import "./AddTaskDialog.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import SelectInput from "./SelectInput";
 import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 
 const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [time, setTime] = useState("morning");
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const timeRef = useRef();
 
   useEffect(() => {
     if (!isOpen) {
-      setTitle("");
-      setDescription("");
-      setTime("morning");
+      if (titleRef.current) titleRef.current.value = "";
+      if (descriptionRef.current) descriptionRef.current.value = "";
+      if (timeRef.current) timeRef.current.value = "morning";
     }
   }, [isOpen]);
 
   const handleSaveButton = () => {
+    const title = titleRef.current?.value;
+    const description = descriptionRef.current?.value;
+    const time = timeRef.current?.value;
+
     if (!title.trim() || !description.trim()) {
       return toast.error("A tarefa precisa de nome e descrição!", {
         style: { color: "orange" },
@@ -67,24 +71,16 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
                   label="Titulo"
                   id="title"
                   placeholder="Título da Tarefa"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  ref={titleRef}
                 />
 
-                {/* <Input label="Período" id="time" placeholder="Período" /> */}
-                <SelectInput
-                  label="Período"
-                  id="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                />
+                <SelectInput label="Período" id="time" ref={timeRef} />
 
                 <Input
                   label="Descrição"
                   id="description"
                   placeholder="Descreva a Tarefa"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  ref={descriptionRef}
                 />
 
                 <div className="flex justify-between w-full gap-1 mt-4">
