@@ -8,17 +8,30 @@ import {
   AfternoonIcon,
 } from "../assets/icons";
 import TaskSeparator from "./TaskSeparator";
-import TASKS from "../constants/TASK";
 import TaskItem from "./TaskItem";
 import { toast } from "sonner";
 import AddTaskDialog from "./AddTaskDialog";
+import { useEffect } from "react";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState(TASKS);
+  const [tasks, setTasks] = useState([]);
   const [dialogIsOpen, dialogSetIsOpen] = useState(false);
   const morning_tasks = tasks.filter((task) => task.time === "morning");
   const afternoon_tasks = tasks.filter((task) => task.time === "afternoon");
   const night_tasks = tasks.filter((task) => task.time === "night");
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "GET",
+      });
+      const tasks = await response.json();
+
+      setTasks(tasks);
+    };
+
+    getTasks();
+  }, []);
 
   const handleTaskClick = (currentTask) => {
     const UpdateTasksStatus = tasks.map((task) => {
