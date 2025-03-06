@@ -66,14 +66,35 @@ const Tasks = () => {
     setTasks(UpdateTasksStatus);
   };
 
-  const handleDeleteTask = (currentTask) => {
-    console.log(currentTask);
+  const handleDeleteTask = async (currentTask) => {
+    const response = await fetch(
+      `http://localhost:3000/tasks/${currentTask.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      return toast.error("Erro ao deletar tarefa, tente novamente!", {
+        style: { color: "crimson" },
+      });
+    }
     const deletedTask = tasks.filter((task) => task.id !== currentTask.id);
     setTasks(deletedTask);
     toast.warning("Tarefa deletada com sucesso!");
   };
 
-  const registerTask = (newTask) => {
+  const registerTask = async (newTask) => {
+    const response = await fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      body: JSON.stringify(newTask),
+    });
+
+    if (!response.ok) {
+      return toast.error("Erro ao criar tarefa, tente novamente!", {
+        style: { color: "crimson" },
+      });
+    }
+
     setTasks([...tasks, newTask]);
   };
 
