@@ -6,11 +6,11 @@ const TaskItem = ({ task, handleTaskClick, handleDeleteTask }) => {
   const getVariantClass = () => {
     switch (task.status) {
       case "done":
-        return "bg-[#00ADB5] text-[#00ADB5]";
+        return "bg-brand-primary text-brand-primary";
       case "in_progress":
-        return "bg-[#FFAA04] text-[#00000080] text-opacity-50";
+        return "bg-brand-process text-[#00000080] text-opacity-50";
       case "not_started":
-        return "bg-[#35383E] bg-opacity-10 text-[#35383E]";
+        return "bg-brand-dark-blue bg-opacity-10 text-brand-dark-blue";
     }
   };
   return (

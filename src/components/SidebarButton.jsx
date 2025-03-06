@@ -2,9 +2,9 @@ const SidebarButton = ({ children, variant }) => {
   const getVariantClass = () => {
     switch (variant) {
       case "disabled":
-        return "text-[#35383E]";
+        return "text-brand-dark-blue";
       case "active":
-        return "bg-[#E6F7F8] text-[#00ADB5]";
+        return "bg-[#E6F7F8] text-brand-primary";
     }
   };
   return (

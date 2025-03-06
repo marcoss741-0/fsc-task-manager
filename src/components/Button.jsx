@@ -2,9 +2,9 @@ const Button = ({ children, variant, size, className, ...rest }) => {
   const getVariantClass = () => {
     switch (variant) {
       case "ghost":
-        return "text-[#818181]";
-      case "primary":
-        return "bg-[#00ADB5] text-white";
+        return "text-brand-dark-gray";
+      case "brand-primary":
+        return "bg-brand-primary text-white";
     }
   };
   const getSizeClass = () => {

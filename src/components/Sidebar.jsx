@@ -6,10 +6,12 @@ const Sidebar = () => {
   return (
     <div className="h-screen w-80 bg-white flex flex-col py-6">
       <div className="py-6 px-8 gap-4 w-full h-[128px] space-y-6 mb-8">
-        <h1 className="text-xl text-[#00ADB5]">Task Manager</h1>
+        <h1 className="text-xl text-brand-primary">Task Manager</h1>
         <p>
           Um simples{" "}
-          <span className="text-[#00ADB5] text-sm">organizador de tarefas</span>
+          <span className="text-brand-primary text-sm">
+            organizador de tarefas
+          </span>
         </p>
       </div>
       <div className="p-2 gap-2 h-[120px] flex flex-col">

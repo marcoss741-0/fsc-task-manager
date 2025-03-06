@@ -68,8 +68,8 @@ const Tasks = () => {
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
         <div>
-          <span className="text-sm text-[#00ADB5]">Minhas tarefas</span>
-          <h2 className="font-semibold text-2xl text-[#35383E] leading-7">
+          <span className="text-sm text-brand-primary">Minhas tarefas</span>
+          <h2 className="font-semibold text-2xl text-brand-dark-blue leading-7">
             Minhas tarefas
           </h2>
         </div>
@@ -82,7 +82,7 @@ const Tasks = () => {
 
           <Button
             size="small"
-            variant="primary"
+            variant="brand-primary"
             onClick={() => dialogSetIsOpen(true)}
           >
             Nova tarefa

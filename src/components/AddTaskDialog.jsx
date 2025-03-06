@@ -60,10 +60,10 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
             >
               <div className="w-[336px] h-[430px] bg-white rounded-2xl flex flex-col items-center gap-4 p-5 relative z-50 shadow-sm">
                 <div className="flex flex-col items-center gap-1 text-center mt-1 w-full">
-                  <h1 className="text-xl text-[#35383E] leading-6 font-semibold">
+                  <h1 className="text-xl text-brand-dark-blue leading-6 font-semibold">
                     Nova tarefa
                   </h1>
-                  <p className="text-sm text-[#9A9C9F] leading-4 font-normal">
+                  <p className="text-sm text-brand-text-gray leading-4 font-normal">
                     Insira as informações da tarefa.
                   </p>
                 </div>
@@ -86,14 +86,14 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
                 <div className="flex justify-between w-full gap-1 mt-4">
                   <Button
                     size="large"
-                    className="w-full justify-center items-center bg-[#EEEEEE] text-[#35383E]"
+                    className="w-full justify-center items-center bg-brand-light-gray text-brand-dark-blue"
                     onClick={closeDialog}
                   >
                     Cancelar
                   </Button>
                   <Button
                     size="large"
-                    className="w-full justify-center items-center bg-[#00ADB5] text-white"
+                    className="w-full justify-center items-center bg-brand-primary text-white"
                     onClick={handleSaveButton}
                   >
                     Salvar
