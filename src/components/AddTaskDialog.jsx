@@ -3,10 +3,41 @@ import Button from "./Button";
 import Input from "./Input";
 import { CSSTransition } from "react-transition-group";
 import "./AddTaskDialog.css";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import SelectInput from "./SelectInput";
+import { toast } from "sonner";
+import { v4 as uuid } from "uuid";
 
-const AddTaskDialog = ({ isOpen, closeDialog }) => {
-  // if (!isOpen) return null;
+const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [time, setTime] = useState("morning");
+
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle("");
+      setDescription("");
+      setTime("morning");
+    }
+  }, [isOpen]);
+
+  const handleSaveButton = () => {
+    if (!title.trim() || !description.trim()) {
+      return toast.error("A tarefa precisa de nome e descrição!", {
+        style: { color: "orange" },
+      });
+    }
+
+    handleNewTask({
+      id: uuid(),
+      title,
+      description,
+      time,
+      status: "not_started",
+    });
+    closeDialog();
+  };
+
   const nodeRef = useRef();
   return (
     <>
@@ -36,12 +67,24 @@ const AddTaskDialog = ({ isOpen, closeDialog }) => {
                   label="Titulo"
                   id="title"
                   placeholder="Título da Tarefa"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
-                <Input label="Período" id="time" placeholder="Período" />
+
+                {/* <Input label="Período" id="time" placeholder="Período" /> */}
+                <SelectInput
+                  label="Período"
+                  id="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                />
+
                 <Input
                   label="Descrição"
                   id="description"
                   placeholder="Descreva a Tarefa"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
 
                 <div className="flex justify-between w-full gap-1 mt-4">
@@ -55,6 +98,7 @@ const AddTaskDialog = ({ isOpen, closeDialog }) => {
                   <Button
                     size="large"
                     className="w-full justify-center items-center bg-[#00ADB5] text-white"
+                    onClick={handleSaveButton}
                   >
                     Salvar
                   </Button>

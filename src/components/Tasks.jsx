@@ -60,6 +60,10 @@ const Tasks = () => {
     toast.warning("Tarefa deletada com sucesso!");
   };
 
+  const registerTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
+
   return (
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
@@ -87,6 +91,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={dialogIsOpen}
             closeDialog={() => dialogSetIsOpen(false)}
+            handleNewTask={registerTask}
           />
         </div>
       </div>
