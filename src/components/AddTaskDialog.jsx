@@ -38,14 +38,12 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
     });
     toast.success("Tarefa criada com sucesso!");
 
-    setTimeout(() => {
-      closeDialog();
-      reset({
-        title: "",
-        description: "",
-        time: "morning",
-      });
-    }, 2000);
+    closeDialog();
+    reset({
+      title: "",
+      description: "",
+      time: "morning",
+    });
   };
 
   const nodeRef = useRef();
@@ -74,60 +72,62 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
                   </p>
                 </div>
                 <form
-                  className="w-full space-y-4 h-full flex flex-col"
+                  className="w-full space-y-4 h-full flex flex-col justify-between"
                   onSubmit={handleSubmit(handleSaveButton)}
                 >
-                  <Input
-                    label="Titulo"
-                    id="title"
-                    placeholder="Título da Tarefa"
-                    disabled={isSubmitting}
-                    {...register("title", {
-                      required: "Título é obrigatório",
-                      validate: (value) => {
-                        if (!value.trim()) {
-                          return "Título é obrigatório";
-                        }
-                        return true;
-                      },
-                    })}
-                    errorMessage={errors.title?.message}
-                  />
+                  <div className="space-y-4">
+                    <Input
+                      label="Titulo"
+                      id="title"
+                      placeholder="Título da Tarefa"
+                      disabled={isSubmitting}
+                      {...register("title", {
+                        required: "Título é obrigatório",
+                        validate: (value) => {
+                          if (!value.trim()) {
+                            return "Título é obrigatório";
+                          }
+                          return true;
+                        },
+                      })}
+                      errorMessage={errors.title?.message}
+                    />
 
-                  <SelectInput
-                    label="Período"
-                    id="time"
-                    disabled={isSubmitting}
-                    {...register("time", {
-                      required: "Período é obrigatório",
-                      validate: (value) => {
-                        if (!value) {
-                          return "Período é obrigatório";
-                        }
-                        return true;
-                      },
-                    })}
-                    errorMessage={errors.time?.message}
-                  />
+                    <SelectInput
+                      label="Período"
+                      id="time"
+                      disabled={isSubmitting}
+                      {...register("time", {
+                        required: "Período é obrigatório",
+                        validate: (value) => {
+                          if (!value) {
+                            return "Período é obrigatório";
+                          }
+                          return true;
+                        },
+                      })}
+                      errorMessage={errors.time?.message}
+                    />
 
-                  <Input
-                    label="Descrição"
-                    id="description"
-                    disabled={isSubmitting}
-                    placeholder="Descreva a Tarefa"
-                    {...register("description", {
-                      required: "Descrição é obrigatório",
-                      validate: (value) => {
-                        if (!value.trim()) {
-                          return "Descrição é obrigatório";
-                        }
-                        return true;
-                      },
-                    })}
-                    errorMessage={errors.description?.message}
-                  />
+                    <Input
+                      label="Descrição"
+                      id="description"
+                      disabled={isSubmitting}
+                      placeholder="Descreva a Tarefa"
+                      {...register("description", {
+                        required: "Descrição é obrigatório",
+                        validate: (value) => {
+                          if (!value.trim()) {
+                            return "Descrição é obrigatório";
+                          }
+                          return true;
+                        },
+                      })}
+                      errorMessage={errors.description?.message}
+                    />
+                  </div>
 
-                  <div className="w-full gap-1 flex">
+                  <div className="w-full gap-1 flex mt-4">
                     <Button
                       type="button"
                       size="large"
