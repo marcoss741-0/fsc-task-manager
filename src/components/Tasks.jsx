@@ -11,29 +11,27 @@ import TaskSeparator from "./TaskSeparator";
 import TaskItem from "./TaskItem";
 import { toast } from "sonner";
 import AddTaskDialog from "./AddTaskDialog";
-import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [dialogIsOpen, dialogSetIsOpen] = useState(false);
-  const morning_tasks = tasks.filter((task) => task.time === "morning");
-  const afternoon_tasks = tasks.filter((task) => task.time === "afternoon");
-  const night_tasks = tasks.filter((task) => task.time === "night");
-
-  useEffect(() => {
-    const getTasks = async () => {
+  const queryClient = useQueryClient();
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
       const response = await fetch("http://localhost:3000/tasks", {
         method: "GET",
       });
       const tasks = await response.json();
+      return tasks;
+    },
+  });
+  const [dialogIsOpen, dialogSetIsOpen] = useState(false);
 
-      setTasks(tasks);
-    };
+  const morning_tasks = tasks?.filter((task) => task.time === "morning");
+  const afternoon_tasks = tasks?.filter((task) => task.time === "afternoon");
+  const night_tasks = tasks?.filter((task) => task.time === "night");
 
-    getTasks();
-  }, []);
-
-  const handleTaskClick = (currentTask) => {
+  const handleTaskClick = async (currentTask) => {
     const UpdateTasksStatus = tasks.map((task) => {
       if (task.id === currentTask.id) {
         let newStatus;
@@ -63,13 +61,14 @@ const Tasks = () => {
       }
       return task;
     });
-    setTasks(UpdateTasksStatus);
+    queryClient.setQueryData(["tasks"], UpdateTasksStatus);
   };
 
-  const onSuccessDeletedTask = (currentTask) => {
-    const deletedTask = tasks.filter((task) => task.id !== currentTask);
-    setTasks(deletedTask);
+  const onSuccessDeletedTask = async () => {
     toast.warning("Tarefa deletada com sucesso!");
+    queryClient.setQueryData(["tasks"], (currentTasks) => {
+      return currentTasks.filter((task) => task.id !== currentTasks.id);
+    });
   };
 
   const registerTask = async (newTask) => {
@@ -84,7 +83,9 @@ const Tasks = () => {
       });
     }
 
-    setTasks([...tasks, newTask]);
+    queryClient.setQueryData(["tasks"], (currentTasks) => {
+      return [...currentTasks, newTask];
+    });
   };
 
   return (
@@ -122,12 +123,12 @@ const Tasks = () => {
       <div className="flex rounded-lg bg-white p-6 shadow-[9.6px_9.6px_9.6px_0px_#00000005] flex-col">
         <div className="space-y-3">
           <TaskSeparator title="Manhã" icon={<SunIcon />} />
-          {morning_tasks.length === 0 ? (
+          {morning_tasks?.length === 0 ? (
             <p className="text-sm text-brand-text-gray text-center">
               Nenhuma tarefa na parte da manhã cadastrada
             </p>
           ) : (
-            morning_tasks.map((task) => (
+            morning_tasks?.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}
@@ -140,12 +141,12 @@ const Tasks = () => {
 
         <div className="space-y-3 my-6">
           <TaskSeparator title="Tarde" icon={<AfternoonIcon />} />
-          {afternoon_tasks.length === 0 ? (
+          {afternoon_tasks?.length === 0 ? (
             <p className="text-sm text-brand-text-gray text-center">
               Nenhuma tarefa na parte da tarde cadastrada
             </p>
           ) : (
-            afternoon_tasks.map((task) => (
+            afternoon_tasks?.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}
@@ -158,12 +159,12 @@ const Tasks = () => {
 
         <div className="space-y-3">
           <TaskSeparator title="Noite" icon={<MoonIcon />} />
-          {night_tasks.length === 0 ? (
+          {night_tasks?.length === 0 ? (
             <p className="text-sm text-brand-text-gray text-center">
               Nenhuma tarefa na parte da noite cadastrada
             </p>
           ) : (
-            night_tasks.map((task) => (
+            night_tasks?.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}

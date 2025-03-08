@@ -96,6 +96,7 @@ const TaskDetailsPage = () => {
         <div className="py-12 px-8 w-full gap-6 justify-between space-y-6">
           <div>
             <button
+              type="button"
               className="bg-brand-primary p-3 text-white rounded-full"
               onClick={handleGoBack}
             >
