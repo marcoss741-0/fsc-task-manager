@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-const SelectInput = forwardRef(({ label, ...rest }, ref) => {
+const SelectInput = forwardRef(({ label, errorMessage, ...rest }, ref) => {
   return (
     <>
       <div className="flex flex-col gap-1 w-full space-y-3">
@@ -21,6 +21,9 @@ const SelectInput = forwardRef(({ label, ...rest }, ref) => {
           <option value="night">Noite</option>
         </select>
       </div>
+      {errorMessage && (
+        <p className="text-xs text-red-500 text-left">{errorMessage}</p>
+      )}
     </>
   );
 });

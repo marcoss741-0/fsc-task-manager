@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-const Input = forwardRef(({ label, ...rest }, ref) => {
+const Input = forwardRef(({ label, errorMessage, ...rest }, ref) => {
   return (
     <>
       <div className="flex flex-col gap-1 w-full space-y-3">
@@ -16,6 +16,9 @@ const Input = forwardRef(({ label, ...rest }, ref) => {
           {...rest}
           ref={ref}
         />
+        {errorMessage && (
+          <p className="text-xs text-red-500 text-left">{errorMessage}</p>
+        )}
       </div>
     </>
   );
