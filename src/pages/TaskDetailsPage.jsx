@@ -54,14 +54,16 @@ const TaskDetailsPage = () => {
       },
       body: JSON.stringify(data),
     });
+    console.log(response);
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       return toast.error("Erro ao atualizar tarefa, tente novamente!", {
         style: { color: "crimson" },
       });
     }
 
     const updatedTask = await response.json();
+
     setTask(updatedTask);
 
     toast.success("Tarefa atualizada com sucesso!");
@@ -80,11 +82,9 @@ const TaskDetailsPage = () => {
       });
     }
 
-    toast.success(
-      "Tarefa deletada! Aguarde um momento, você será redirecionado..."
-    );
+    toast.success("Tarefa deletada! você foi redirecionado...");
+    navigate(-1);
     setDeleteIsLoading(false);
-    setTimeout(() => navigate(-1), 2500);
   };
 
   return (
