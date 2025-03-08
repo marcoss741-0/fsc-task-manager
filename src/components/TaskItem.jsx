@@ -3,6 +3,7 @@ import Button from "./Button";
 import TrashIcon from "../assets/icons/trash-2.svg?react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const TaskItem = ({ task, handleTaskClick, onDeleteSuccess }) => {
   const getVariantClass = () => {
@@ -69,9 +70,12 @@ const TaskItem = ({ task, handleTaskClick, onDeleteSuccess }) => {
             <TrashIcon />
           )}
         </Button>
-        <a href="#" className="hover:opacity-80 transition-opacity">
+        <Link
+          to={`/task/${task.id}`}
+          className="hover:opacity-80 transition-opacity"
+        >
           <DetailsIcon />
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import AfternoonIcon from "./cloud-sun.svg?react";
 import CheckIcon from "./check.svg?react";
 import LoaderIcon from "./loader-circle.svg?react";
 import DetailsIcon from "./Group.svg?react";
+import ArrowLeftIcon from "./arrow-back.svg?react";
+import ArrowRIcon from "./arrow-r.svg?react";
 
 export {
   AddIcon,
@@ -16,4 +18,6 @@ export {
   CheckIcon,
   LoaderIcon,
   DetailsIcon,
+  ArrowLeftIcon,
+  ArrowRIcon,
 };

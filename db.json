@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "Estudar React",
-      "description": "Estudar React na FullstackClub",
+      "description": "Estudar React na Fullstack Club",
       "time": "morning",
       "status": "done"
     },
@@ -11,7 +11,7 @@
       "id": "2",
       "title": "Fazer exercícios do React",
       "description": "Fazer exercícios do React na FullstackClub para melhorar o aprendizado",
-      "time": "morning",
+      "time": "night",
       "status": "done"
     },
     {
@@ -30,10 +30,17 @@
     },
     {
       "id": "6",
-      "title": "Descansar",
-      "description": "Descansar para melhorar o corpo",
+      "title": "Dormir",
+      "description": "Descansar para melhorar o corpo e a mente",
       "time": "night",
       "status": "in_progress"
+    },
+    {
+      "id": "af39c934-02aa-45ed-9db4-8449739c7038",
+      "title": "Anotar no notion",
+      "description": "Ter paciencia para estudar",
+      "time": "afternoon",
+      "status": "not_started"
     }
   ]
 }

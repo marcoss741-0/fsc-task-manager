@@ -5,6 +5,8 @@ const Button = ({ children, variant, size, className, ...rest }) => {
         return "text-brand-dark-gray";
       case "brand-primary":
         return "bg-brand-primary text-white";
+      case "danger":
+        return "bg-brand-danger text-white";
     }
   };
   const getSizeClass = () => {
@@ -17,7 +19,7 @@ const Button = ({ children, variant, size, className, ...rest }) => {
   };
   return (
     <button
-      className={`${getVariantClass()} ${className} ${getSizeClass()} text-center rounded-md flex items-center font-medium gap-2 hover:opacity-80 transition-colors `}
+      className={`${getVariantClass()} ${className} ${getSizeClass()} text-center flex items-center font-medium gap-2 hover:opacity-80 transition-colors `}
       {...rest}
     >
       {children}
