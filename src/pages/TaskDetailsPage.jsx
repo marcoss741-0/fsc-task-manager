@@ -18,8 +18,8 @@ const TaskDetailsPage = () => {
   const [task, setTask] = useState({
     title: "",
     description: "",
-    time: "",
-    status: "",
+    time: "morning",
+    status: "not_started",
   });
   const navigate = useNavigate();
   const [deleteIsLoading, setDeleteIsLoading] = useState(false);
@@ -82,9 +82,11 @@ const TaskDetailsPage = () => {
       });
     }
 
-    toast.success("Tarefa deletada! você foi redirecionado...");
-    navigate(-1);
-    setDeleteIsLoading(false);
+    toast.success("Tarefa deletada! você será redirecionado...");
+    setTimeout(() => {
+      navigate(-1);
+      setDeleteIsLoading(false);
+    }, 2000);
   };
 
   return (
@@ -117,6 +119,7 @@ const TaskDetailsPage = () => {
 
               <div>
                 <Button
+                  type="button"
                   className="rounded-md"
                   variant="danger"
                   size={"small"}
