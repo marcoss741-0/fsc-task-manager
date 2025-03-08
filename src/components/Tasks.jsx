@@ -122,38 +122,56 @@ const Tasks = () => {
       <div className="flex rounded-lg bg-white p-6 shadow-[9.6px_9.6px_9.6px_0px_#00000005] flex-col">
         <div className="space-y-3">
           <TaskSeparator title="Manhã" icon={<SunIcon />} />
-          {morning_tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleTaskClick={handleTaskClick}
-              onDeleteSuccess={onSuccessDeletedTask}
-            />
-          ))}
+          {morning_tasks.length === 0 ? (
+            <p className="text-sm text-brand-text-gray text-center">
+              Nenhuma tarefa na parte da manhã cadastrada
+            </p>
+          ) : (
+            morning_tasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleTaskClick={handleTaskClick}
+                onDeleteSuccess={onSuccessDeletedTask}
+              />
+            ))
+          )}
         </div>
 
         <div className="space-y-3 my-6">
           <TaskSeparator title="Tarde" icon={<AfternoonIcon />} />
-          {afternoon_tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleTaskClick={handleTaskClick}
-              onDeleteSuccess={onSuccessDeletedTask}
-            />
-          ))}
+          {afternoon_tasks.length === 0 ? (
+            <p className="text-sm text-brand-text-gray text-center">
+              Nenhuma tarefa na parte da tarde cadastrada
+            </p>
+          ) : (
+            afternoon_tasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleTaskClick={handleTaskClick}
+                onDeleteSuccess={onSuccessDeletedTask}
+              />
+            ))
+          )}
         </div>
 
         <div className="space-y-3">
           <TaskSeparator title="Noite" icon={<MoonIcon />} />
-          {night_tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              handleTaskClick={handleTaskClick}
-              onDeleteSuccess={onSuccessDeletedTask}
-            />
-          ))}
+          {night_tasks.length === 0 ? (
+            <p className="text-sm text-brand-text-gray text-center">
+              Nenhuma tarefa na parte da noite cadastrada
+            </p>
+          ) : (
+            night_tasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                handleTaskClick={handleTaskClick}
+                onDeleteSuccess={onSuccessDeletedTask}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
