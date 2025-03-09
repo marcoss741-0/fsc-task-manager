@@ -45,18 +45,28 @@ const TaskDetailsPage = () => {
     /* Atualizar a tarefa */
   }
   const { mutate: updateTask, isPending: updateIsPending } = useMutation({
-    mutationKey: ["updateTask"],
+    mutationKey: ["updateTask", taskId],
     mutationFn: async (data) => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: "PATCH",
         body: JSON.stringify(data),
       });
-      return response.json();
+      const updatedTask = await response.json();
+
+      queryClient.setQueryData(["tasks"], (oldTasks) => {
+        return oldTasks.map((oldTask) => {
+          if (oldTask.id === taskId) {
+            return updatedTask;
+          }
+          return oldTask;
+        });
+      });
     },
     onSuccess: () => {
       toast.success("Tarefa atualizada com sucesso!", {
         style: { color: "forestgreen" },
       });
+
       queryClient.invalidateQueries(["tasks"]);
     },
     onError: () => {
@@ -70,7 +80,7 @@ const TaskDetailsPage = () => {
     /* Deletar a tarefa */
   }
   const { mutate: deleteTask, isPending: deleteIsPending } = useMutation({
-    mutationKey: ["deleteTask"],
+    mutationKey: ["deleteTask", taskId],
     mutationFn: async () => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: "DELETE",
