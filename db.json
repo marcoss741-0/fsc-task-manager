@@ -52,13 +52,6 @@
       "description": "Melhorar concentração e mente",
       "time": "night",
       "status": "not_started"
-    },
-    {
-      "id": "5fac9cec-cc2d-4c1e-8103-33e489387e7b",
-      "title": "teste44",
-      "description": "tarefa teste",
-      "time": "morning",
-      "status": "not_started"
     }
   ]
 }

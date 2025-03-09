@@ -85,7 +85,10 @@ const TaskDetailsPage = () => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: "DELETE",
       });
-      return response.json();
+      const deletedTask = await response.json();
+      queryClient.setQueryData(["tasks"], (oldTasks) => {
+        return oldTasks.filter((oldTask) => oldTask.id !== deletedTask.id);
+      });
     },
     onSuccess: () => {
       toast.success("Tarefa deletada! você será redirecionado...");
