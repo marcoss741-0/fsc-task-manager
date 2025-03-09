@@ -31,20 +31,6 @@
     {
       "id": "e961060d-2742-4cab-b1bb-d6ecd072192b",
       "status": "not_started"
-    },
-    {
-      "id": "a5cb8e4a-e17d-47e7-a36e-d8162958a6f9",
-      "title": "bora la mano",
-      "description": "Estudar React na FullstackClubsssss",
-      "time": "morning",
-      "status": "not_started"
-    },
-    {
-      "id": "628c4a4a-7a5b-4b60-8a64-ba56604e85ab",
-      "title": "teste",
-      "description": "sdkvjbasdu",
-      "time": "night",
-      "status": "not_started"
     }
   ]
 }

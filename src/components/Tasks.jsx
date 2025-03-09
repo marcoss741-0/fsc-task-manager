@@ -64,7 +64,7 @@ const Tasks = () => {
     queryClient.setQueryData(["tasks"], UpdateTasksStatus);
   };
   return (
-    <div className="py-16 px-8 w-full">
+    <div className="py-16 px-8 w-full space-y-6">
       <div className="flex w-full justify-between">
         <div>
           <span className="text-sm text-brand-primary">Minhas tarefas</span>
