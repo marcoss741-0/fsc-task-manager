@@ -9,8 +9,9 @@ import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import { useForm } from "react-hook-form";
 import { LoaderIcon } from "../assets/icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
+const AddTaskDialog = ({ isOpen, closeDialog }) => {
   const {
     register,
     handleSubmit,
@@ -28,21 +29,40 @@ const AddTaskDialog = ({ isOpen, closeDialog, handleNewTask }) => {
     }
   }, [isOpen, reset]);
 
-  const handleSaveButton = (data) => {
-    handleNewTask({
-      id: uuid(),
-      title: data.title.trim(),
-      description: data.description.trim(),
-      time: data.time.trim(),
-      status: "not_started",
-    });
-    toast.success("Tarefa criada com sucesso!");
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ["addTask"],
+    mutationFn: async (data) => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+  });
 
-    closeDialog();
-    reset({
-      title: "",
-      description: "",
-      time: "morning",
+  const handleSaveButton = (data) => {
+    const task = { ...data, id: uuid(), status: "not_started" };
+    mutate(task, {
+      onSuccess: () => {
+        queryClient.setQueryData(["tasks"], (oldTasks) => {
+          return [...oldTasks, task];
+        });
+        toast.success("Tarefa criada com sucesso!", {
+          style: { color: "forestgreen" },
+        });
+        reset({
+          title: "",
+          description: "",
+          time: "morning",
+        });
+        closeDialog();
+      },
+      onError: () => {
+        toast.error("Erro ao criar tarefa, tente novamente!", {
+          style: { color: "crimson" },
+        });
+      },
     });
   };
 

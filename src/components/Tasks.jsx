@@ -31,7 +31,7 @@ const Tasks = () => {
   const afternoon_tasks = tasks?.filter((task) => task.time === "afternoon");
   const night_tasks = tasks?.filter((task) => task.time === "night");
 
-  const handleTaskClick = async (currentTask) => {
+  const handleCheckBoxClick = async (currentTask) => {
     const UpdateTasksStatus = tasks.map((task) => {
       if (task.id === currentTask.id) {
         let newStatus;
@@ -63,31 +63,6 @@ const Tasks = () => {
     });
     queryClient.setQueryData(["tasks"], UpdateTasksStatus);
   };
-
-  const onSuccessDeletedTask = async () => {
-    toast.warning("Tarefa deletada com sucesso!");
-    queryClient.setQueryData(["tasks"], (currentTasks) => {
-      return currentTasks.filter((task) => task.id !== currentTasks.id);
-    });
-  };
-
-  const registerTask = async (newTask) => {
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      body: JSON.stringify(newTask),
-    });
-
-    if (!response.ok) {
-      return toast.error("Erro ao criar tarefa, tente novamente!", {
-        style: { color: "crimson" },
-      });
-    }
-
-    queryClient.setQueryData(["tasks"], (currentTasks) => {
-      return [...currentTasks, newTask];
-    });
-  };
-
   return (
     <div className="py-16 px-8 w-full">
       <div className="flex w-full justify-between">
@@ -115,7 +90,6 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={dialogIsOpen}
             closeDialog={() => dialogSetIsOpen(false)}
-            handleNewTask={registerTask}
           />
         </div>
       </div>
@@ -132,8 +106,7 @@ const Tasks = () => {
               <TaskItem
                 key={task.id}
                 task={task}
-                handleTaskClick={handleTaskClick}
-                onDeleteSuccess={onSuccessDeletedTask}
+                handleCheckBoxSet={handleCheckBoxClick}
               />
             ))
           )}
@@ -150,8 +123,7 @@ const Tasks = () => {
               <TaskItem
                 key={task.id}
                 task={task}
-                handleTaskClick={handleTaskClick}
-                onDeleteSuccess={onSuccessDeletedTask}
+                handleCheckBoxSet={handleCheckBoxClick}
               />
             ))
           )}
@@ -168,8 +140,7 @@ const Tasks = () => {
               <TaskItem
                 key={task.id}
                 task={task}
-                handleTaskClick={handleTaskClick}
-                onDeleteSuccess={onSuccessDeletedTask}
+                handleCheckBoxSet={handleCheckBoxClick}
               />
             ))
           )}
