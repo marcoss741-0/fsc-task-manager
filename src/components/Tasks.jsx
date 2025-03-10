@@ -1,5 +1,3 @@
-import { useState } from "react";
-import Button from "./Button";
 import {
   AddIcon,
   TrashIcon,
@@ -13,11 +11,11 @@ import { toast } from "sonner";
 import AddTaskDialog from "./AddTaskDialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetTasks } from "../hooks/data/use-get-tasks";
+import Header from "./Header";
 
 const Tasks = () => {
   const queryClient = useQueryClient();
   const { data: tasks } = useGetTasks();
-  const [dialogIsOpen, dialogSetIsOpen] = useState(false);
 
   const morning_tasks = tasks?.filter((task) => task.time === "morning");
   const afternoon_tasks = tasks?.filter((task) => task.time === "afternoon");
@@ -57,35 +55,7 @@ const Tasks = () => {
   };
   return (
     <div className="py-16 px-8 w-full space-y-6">
-      <div className="flex w-full justify-between">
-        <div>
-          <span className="text-sm text-brand-primary">Minhas tarefas</span>
-          <h2 className="font-semibold text-2xl text-brand-dark-blue leading-7">
-            Minhas tarefas
-          </h2>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Button size="small" variant="ghost">
-            Limpar tarefa
-            <TrashIcon />
-          </Button>
-
-          <Button
-            size="small"
-            variant="brand-primary"
-            onClick={() => dialogSetIsOpen(true)}
-          >
-            Nova tarefa
-            <AddIcon />
-          </Button>
-          <AddTaskDialog
-            isOpen={dialogIsOpen}
-            closeDialog={() => dialogSetIsOpen(false)}
-          />
-        </div>
-      </div>
-
+      <Header title={"Minhas tarefas"} subtitle={"Todas as tarefas"} />
       <div className="flex rounded-lg bg-white p-6 shadow-[9.6px_9.6px_9.6px_0px_#00000005] flex-col">
         <div className="space-y-3">
           <TaskSeparator title="Manhã" icon={<SunIcon />} />

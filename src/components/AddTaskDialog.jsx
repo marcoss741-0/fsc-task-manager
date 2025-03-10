@@ -10,7 +10,7 @@ import { v4 as uuid } from "uuid";
 import { useForm } from "react-hook-form";
 import { useAddTask } from "../hooks/data/use-add-tasks";
 
-const AddTaskDialog = ({ isOpen, closeDialog }) => {
+export default function AddTaskDialog({ isOpen, closeDialog }) {
   const {
     register,
     handleSubmit,
@@ -160,6 +160,4 @@ const AddTaskDialog = ({ isOpen, closeDialog }) => {
       </CSSTransition>
     </>
   );
-};
-
-export default AddTaskDialog;
+}
