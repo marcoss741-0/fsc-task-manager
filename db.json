@@ -34,23 +34,9 @@
     },
     {
       "id": "388b4c86-904a-42a0-8927-264712c87001",
-      "title": "Estudar React",
+      "title": "Estudar ReactJS",
       "description": "Estudar React na FullstackClub",
       "time": "morning",
-      "status": "not_started"
-    },
-    {
-      "id": "4e2a9360-0888-4645-a8d3-e18c0b7bbfe9",
-      "title": "Academia",
-      "description": "Ir para academia",
-      "time": "afternoon",
-      "status": "not_started"
-    },
-    {
-      "id": "b62d0808-944e-4b93-bbb0-f634436bc363",
-      "title": "Meditar",
-      "description": "Melhorar concentração e mente",
-      "time": "night",
       "status": "not_started"
     }
   ]

@@ -8,8 +8,7 @@ import SelectInput from "./SelectInput";
 import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import { useForm } from "react-hook-form";
-import { LoaderIcon } from "../assets/icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAddTask } from "../hooks/data/use-add-tasks";
 
 const AddTaskDialog = ({ isOpen, closeDialog }) => {
   const {
@@ -29,25 +28,12 @@ const AddTaskDialog = ({ isOpen, closeDialog }) => {
     }
   }, [isOpen, reset]);
 
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationKey: ["addTask"],
-    mutationFn: async (data) => {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-  });
+  const { mutate: addTask } = useAddTask();
 
   const handleSaveButton = (data) => {
     const task = { ...data, id: uuid(), status: "not_started" };
-    mutate(task, {
+    addTask(task, {
       onSuccess: () => {
-        queryClient.setQueryData(["tasks"], (oldTasks) => {
-          return [...oldTasks, task];
-        });
         toast.success("Tarefa criada com sucesso!", {
           style: { color: "forestgreen" },
         });
@@ -160,10 +146,8 @@ const AddTaskDialog = ({ isOpen, closeDialog }) => {
                       type="submit"
                       size="large"
                       className="w-full justify-center items-center bg-brand-primary text-white"
+                      disabled={isSubmitting}
                     >
-                      {isSubmitting && (
-                        <LoaderIcon className="animate-spin text-white" />
-                      )}
                       Salvar
                     </Button>
                   </div>

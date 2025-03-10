@@ -9,14 +9,16 @@ import {
 } from "../assets/icons";
 import Input from "../components/Input";
 import SelectInput from "../components/SelectInput";
-import { toast } from "sonner";
+
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUpdateTask } from "../hooks/data/use-update-task";
+import { useDeleteTasks } from "../hooks/data/use-delete-tasks";
+import { toast } from "sonner";
+import { useGetTaskId } from "../hooks/data/use-get-task-id";
 
 const TaskDetailsPage = () => {
   const { taskId } = useParams();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -29,91 +31,46 @@ const TaskDetailsPage = () => {
   {
     /* Popular o form com os dados da tarefa  */
   }
-  const { data: task } = useQuery({
-    queryKey: ["tasks", taskId],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "GET",
-      });
-      const task = await response.json();
-      reset(task);
-      return task;
-    },
+  const { data: task } = useGetTaskId({
+    taskId,
+    onSuccess: (task) => reset(task),
   });
 
   {
     /* Atualizar a tarefa */
   }
-  const { mutate: updateTask, isPending: updateIsPending } = useMutation({
-    mutationKey: ["updateTask", taskId],
-    mutationFn: async (data) => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      });
-      const updatedTask = await response.json();
-
-      queryClient.setQueryData(["tasks"], (oldTasks) => {
-        return oldTasks.map((oldTask) => {
-          if (oldTask.id === taskId) {
-            return updatedTask;
-          }
-          return oldTask;
-        });
-      });
-    },
-    onSuccess: () => {
-      toast.success("Tarefa atualizada com sucesso!", {
-        style: { color: "forestgreen" },
-      });
-
-      queryClient.invalidateQueries(["tasks"]);
-    },
-    onError: () => {
-      toast.error("Erro ao atualizar tarefa, tente novamente!", {
-        style: { color: "crimson" },
-      });
-    },
-  });
+  const { mutate: updateTask, isPending: updateIsPending } = useUpdateTask();
 
   {
     /* Deletar a tarefa */
   }
-  const { mutate: deleteTask, isPending: deleteIsPending } = useMutation({
-    mutationKey: ["deleteTask", taskId],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "DELETE",
-      });
-      const deletedTask = await response.json();
-      queryClient.setQueryData(["tasks"], (oldTasks) => {
-        return oldTasks.filter((oldTask) => oldTask.id !== deletedTask.id);
-      });
-    },
-    onSuccess: () => {
-      toast.success("Tarefa deletada! você será redirecionado...");
-      queryClient.invalidateQueries(["tasks"]);
-      navigate(-1);
-    },
-    onError: () => {
-      toast.error("Erro ao deletar tarefa, tente novamente!", {
-        style: { color: "crimson" },
-      });
-    },
-  });
+  const { mutate: deleteTask, isPending: delIsPending } =
+    useDeleteTasks(taskId);
 
   const handleUpdateTask = async (data) => {
     updateTask(data);
   };
 
   const handleDeleteTask = async () => {
-    deleteTask();
+    deleteTask(undefined, {
+      onSuccess: () => {
+        toast.success("Tarefa excluida!", {
+          style: { color: "orange" },
+        });
+        navigate(-1);
+      },
+      onError: () => {
+        toast.error("Erro ao deletar tarefa, tente novamente!", {
+          style: { color: "crimson" },
+        });
+      },
+    });
   };
 
   return (
-    <div onSubmit={handleSubmit(handleUpdateTask)} className="flex">
+    <div className="flex">
       <Sidebar />
-      <form className="w-full">
+      <form onSubmit={handleSubmit(handleUpdateTask)} className="w-full">
         <div className="py-12 px-8 w-full gap-6 justify-between space-y-6">
           <div>
             <button
@@ -147,7 +104,7 @@ const TaskDetailsPage = () => {
                   size={"small"}
                   onClick={handleDeleteTask}
                 >
-                  {deleteIsPending ? (
+                  {delIsPending ? (
                     <LoaderIcon className="animate-spin text-white" />
                   ) : (
                     <TrashIcon />

@@ -11,20 +11,12 @@ import TaskSeparator from "./TaskSeparator";
 import TaskItem from "./TaskItem";
 import { toast } from "sonner";
 import AddTaskDialog from "./AddTaskDialog";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetTasks } from "../hooks/data/use-get-tasks";
 
 const Tasks = () => {
   const queryClient = useQueryClient();
-  const { data: tasks } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: async () => {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "GET",
-      });
-      const tasks = await response.json();
-      return tasks;
-    },
-  });
+  const { data: tasks } = useGetTasks();
   const [dialogIsOpen, dialogSetIsOpen] = useState(false);
 
   const morning_tasks = tasks?.filter((task) => task.time === "morning");

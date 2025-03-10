@@ -3,7 +3,7 @@ import Button from "./Button";
 import TrashIcon from "../assets/icons/trash-2.svg?react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDeleteTasks } from "../hooks/data/use-delete-tasks";
 
 const TaskItem = ({ task, handleCheckBoxSet }) => {
   const getVariantClass = () => {
@@ -17,24 +17,11 @@ const TaskItem = ({ task, handleCheckBoxSet }) => {
     }
   };
 
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["deleteTask", task.id],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-        method: "DELETE",
-      });
-      return response.json();
-    },
-  });
+  const { mutate: deleteTask, isPending } = useDeleteTasks(task.id);
 
-  const handleDeleteThisTask = async () => {
-    mutate(undefined, {
+  const handleDeleteClick = async () => {
+    deleteTask(undefined, {
       onSuccess: () => {
-        queryClient.setQueryData(["tasks"], (oldTasks) => {
-          return oldTasks.filter((oldTask) => oldTask.id !== task.id);
-        });
-
         toast.success("Tarefa excluida!", {
           style: { color: "orange" },
         });
@@ -68,7 +55,7 @@ const TaskItem = ({ task, handleCheckBoxSet }) => {
         {task.title}
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="small" onClick={handleDeleteThisTask}>
+        <Button variant="ghost" size="small" onClick={handleDeleteClick}>
           {isPending ? (
             <LoaderIcon className="animate-spin text-brand-white" />
           ) : (
