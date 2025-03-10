@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
+import HomePage from "./pages/Home.jsx";
+import TasksPage from "./pages/Tasks.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TaskDetailsPage from "./pages/TaskDetailsPage.jsx";
 import { Toaster } from "sonner";
@@ -11,7 +12,11 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <HomePage />,
+  },
+  {
+    path: "/tasks",
+    element: <TasksPage />,
   },
   {
     path: "/task/:taskId",
