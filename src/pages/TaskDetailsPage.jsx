@@ -39,7 +39,8 @@ const TaskDetailsPage = () => {
   {
     /* Atualizar a tarefa */
   }
-  const { mutate: updateTask, isPending: updateIsPending } = useUpdateTask();
+  const { mutate: updateTask, isPending: updateIsPending } =
+    useUpdateTask(taskId);
 
   {
     /* Deletar a tarefa */

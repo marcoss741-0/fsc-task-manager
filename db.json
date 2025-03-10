@@ -33,17 +33,10 @@
       "status": "not_started"
     },
     {
-      "id": "388b4c86-904a-42a0-8927-264712c87001",
-      "title": "Estudar ReactJS",
-      "description": "Estudar React na FullstackClub",
-      "time": "night",
-      "status": "not_started"
-    },
-    {
-      "id": "114f55ab-f9f2-4ef9-a89e-adbef83fd4f5",
+      "id": "ae2bd6b9-f491-4d12-8fb5-35d22fe85dcc",
       "title": "teste",
       "description": "testes",
-      "time": "morning",
+      "time": "afternoon",
       "status": "not_started"
     }
   ]

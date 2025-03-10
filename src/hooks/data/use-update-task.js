@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api } from "../../lib/axios";
+import { TaskQueryKeys } from "../../keys/querys";
+import { TaskMutationKeys } from "../../keys/mutations";
 
-export function useUpdateTask() {
+export function useUpdateTask(taskId) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["updateTask"],
+    mutationKey: TaskMutationKeys.update(taskId),
     mutationFn: async (data) => {
       const { data: updatedTask } = await api.patch(`/tasks/${data.id}`, data);
 
@@ -22,7 +24,10 @@ export function useUpdateTask() {
       });
 
       // Atualiza a tarefa individual no cache
-      queryClient.setQueryData(["task", updatedTask.id], updatedTask);
+      queryClient.setQueryData(
+        TaskQueryKeys.getOne(updatedTask.id),
+        updatedTask
+      );
 
       // Invalida a consulta para garantir que os dados mais recentes sejam buscados
       queryClient.invalidateQueries(["tasks"]);
