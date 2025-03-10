@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { toast } from "sonner";
+import { api } from "../../lib/axios";
 
 export function useUpdateTask() {
   const queryClient = useQueryClient();
@@ -8,10 +8,7 @@ export function useUpdateTask() {
   return useMutation({
     mutationKey: ["updateTask"],
     mutationFn: async (data) => {
-      const { data: updatedTask } = await axios.patch(
-        `http://localhost:3000/tasks/${data.id}`,
-        data
-      );
+      const { data: updatedTask } = await api.patch(`/tasks/${data.id}`, data);
 
       // Atualiza a lista de tarefas no cache
       queryClient.setQueryData(["tasks"], (oldTasks) => {

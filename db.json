@@ -36,7 +36,7 @@
       "id": "388b4c86-904a-42a0-8927-264712c87001",
       "title": "Estudar ReactJS",
       "description": "Estudar React na FullstackClub",
-      "time": "morning",
+      "time": "night",
       "status": "not_started"
     },
     {
@@ -45,41 +45,6 @@
       "description": "testes",
       "time": "morning",
       "status": "not_started"
-    },
-    {
-      "id": "c2cde0c0-dbc7-4a7e-b61d-54ae93ff3425",
-      "title": "testemarck",
-      "description": "testes",
-      "time": "afternoon",
-      "status": "not_started",
-      "data": {
-        "id": "c2cde0c0-dbc7-4a7e-b61d-54ae93ff3425",
-        "title": "testes",
-        "description": "trocar",
-        "time": "morning",
-        "status": "not_started",
-        "data": {
-          "id": "c2cde0c0-dbc7-4a7e-b61d-54ae93ff3425",
-          "title": "testes",
-          "description": "rbsdbaefdb",
-          "time": "night",
-          "status": "not_started",
-          "data": {
-            "id": "c2cde0c0-dbc7-4a7e-b61d-54ae93ff3425",
-            "title": "tarefa de teta",
-            "description": "rbsdbaefdb",
-            "time": "morning",
-            "status": "not_started",
-            "data": {
-              "id": "c2cde0c0-dbc7-4a7e-b61d-54ae93ff3425",
-              "title": "testes",
-              "description": "normal",
-              "time": "morning",
-              "status": "not_started"
-            }
-          }
-        }
-      }
     }
   ]
 }
