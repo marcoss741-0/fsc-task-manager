@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { toast } from "sonner";
 
 export function useUpdateTask() {
@@ -7,25 +8,32 @@ export function useUpdateTask() {
   return useMutation({
     mutationKey: ["updateTask"],
     mutationFn: async (data) => {
-      const response = await fetch(`http://localhost:3000/tasks/${data.id}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      });
-      const updatedTask = await response.json();
+      const { data: updatedTask } = await axios.patch(
+        `http://localhost:3000/tasks/${data.id}`,
+        data
+      );
+
+      // Atualiza a lista de tarefas no cache
       queryClient.setQueryData(["tasks"], (oldTasks) => {
-        return oldTasks.map((oldTask) => {
-          if (oldTask.id === updatedTask.id) {
+        if (!oldTasks) return [];
+        return oldTasks.map((task) => {
+          if (task.id === updatedTask.id) {
             return updatedTask;
           }
-          return oldTask;
+          return task;
         });
       });
+
+      // Atualiza a tarefa individual no cache
+      queryClient.setQueryData(["task", updatedTask.id], updatedTask);
+
+      // Invalida a consulta para garantir que os dados mais recentes sejam buscados
+      queryClient.invalidateQueries(["tasks"]);
     },
     onSuccess: () => {
       toast.success("Tarefa atualizada com sucesso!", {
         style: { color: "forestgreen" },
       });
-      queryClient.invalidateQueries(["tasks"]);
     },
     onError: () => {
       toast.error("Erro ao atualizar tarefa, tente novamente!", {

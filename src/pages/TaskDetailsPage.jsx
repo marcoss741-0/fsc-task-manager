@@ -33,7 +33,7 @@ const TaskDetailsPage = () => {
   }
   const { data: task } = useGetTaskId({
     taskId,
-    onSuccess: (task) => reset(task),
+    onSuccess: reset,
   });
 
   {
