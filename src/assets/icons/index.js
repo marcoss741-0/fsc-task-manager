@@ -8,6 +8,10 @@ import LoaderIcon from "./loader-circle.svg?react";
 import DetailsIcon from "./Group.svg?react";
 import ArrowLeftIcon from "./arrow-back.svg?react";
 import ArrowRIcon from "./arrow-r.svg?react";
+import Task2Icon from "./task-2.svg?react";
+import WaterGlassIcon from "./glass-water.svg?react";
+import TaskIcon from "./tasks.svg?react";
+import HomeIcon from "./home.svg?react";
 
 export {
   AddIcon,
@@ -20,4 +24,8 @@ export {
   DetailsIcon,
   ArrowLeftIcon,
   ArrowRIcon,
+  Task2Icon,
+  WaterGlassIcon,
+  TaskIcon,
+  HomeIcon,
 };
