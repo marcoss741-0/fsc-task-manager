@@ -4,18 +4,31 @@ import TrashIcon from "../assets/icons/trash-2.svg?react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { useDeleteTasks } from "../hooks/data/use-delete-tasks";
+import { useUpdateTask } from "../hooks/data/use-update-task";
+import { tv } from "tailwind-variants";
 
-const TaskItem = ({ task, handleCheckBoxSet }) => {
-  const getVariantClass = () => {
-    switch (task.status) {
-      case "done":
-        return "bg-brand-primary text-brand-primary";
-      case "in_progress":
-        return "bg-brand-process text-[#00000080] text-opacity-50";
-      case "not_started":
-        return "bg-brand-dark-blue bg-opacity-10 text-brand-dark-blue";
-    }
-  };
+const TaskItem = ({ task }) => {
+  const rowTask = tv({
+    base: "bg-opacity-10 py-3 text-sm px-4 rounded-lg flex items-center gap-2 justify-between",
+    variants: {
+      status: {
+        done: "bg-brand-primary text-brand-primary",
+        in_progress: "bg-brand-process text-[#00000080] text-opacity-50",
+        not_started: "bg-brand-dark-blue bg-opacity-10 text-brand-dark-blue",
+      },
+    },
+  });
+
+  const labelTask = tv({
+    base: "relative flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg",
+    variants: {
+      status: {
+        done: "bg-brand-primary text-brand-primary",
+        in_progress: "bg-brand-process text-[#00000080] text-opacity-50",
+        not_started: "bg-brand-dark-blue bg-opacity-10 text-brand-dark-blue",
+      },
+    },
+  });
 
   const { mutate: deleteTask, isPending } = useDeleteTasks(task.id);
 
@@ -33,19 +46,32 @@ const TaskItem = ({ task, handleCheckBoxSet }) => {
       },
     });
   };
+
+  const { mutate: updateTask } = useUpdateTask(task.id);
+
+  const handleCheckClick = async () => {
+    switch (task.status) {
+      case "not_started":
+        updateTask({ status: "in_progress" });
+        break;
+      case "in_progress":
+        updateTask({ status: "done" });
+        break;
+      case "done":
+        updateTask({ status: "not_started" });
+        break;
+    }
+  };
+
   return (
-    <div
-      className={`bg-opacity-10 py-3 text-sm px-4 rounded-lg  ${getVariantClass()} flex items-center gap-2 justify-between`}
-    >
+    <div className={rowTask({ status: task.status })}>
       <div className="flex items-center gap-2">
-        <label
-          className={`relative flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg ${getVariantClass()}`}
-        >
+        <label className={labelTask({ status: task.status })}>
           <input
             type="checkbox"
             checked={task.status === "done"}
             className="absolute h-full w-full cursor-pointer opacity-0"
-            onChange={() => handleCheckBoxSet(task)}
+            onChange={handleCheckClick}
           />
           {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (

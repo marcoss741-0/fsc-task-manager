@@ -10,7 +10,8 @@ export function useUpdateTask(taskId) {
   return useMutation({
     mutationKey: TaskMutationKeys.update(taskId),
     mutationFn: async (data) => {
-      const { data: updatedTask } = await api.patch(`/tasks/${data.id}`, data);
+      const { data: updatedTask } = await api.patch(`/tasks/${taskId}`, data);
+      console.log(data);
 
       // Atualiza a lista de tarefas no cache
       queryClient.setQueryData(["tasks"], (oldTasks) => {
