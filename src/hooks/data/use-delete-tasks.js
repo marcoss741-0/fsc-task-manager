@@ -11,12 +11,11 @@ export function useDeleteTasks(taskId) {
     mutationFn: async () => {
       const { data: deletedTask } = await api.delete(`/tasks/${taskId}`);
 
-      return deletedTask;
-    },
-    onSuccess: (deletedTask) => {
       queryClient.setQueryData(TaskQueryKeys.getAll(), (oldTasks) => {
         return oldTasks.filter((oldTask) => oldTask.id !== deletedTask.id);
       });
+
+      // return deletedTask;
     },
   });
 }
