@@ -5,14 +5,14 @@
       "title": "teste",
       "description": "testes",
       "time": "night",
-      "status": "done"
+      "status": "in_progress"
     },
     {
       "id": "323021bb-ce1c-414a-8616-f89a107eaf96",
       "title": "teste 2",
       "description": "aregaerga",
       "time": "afternoon",
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": "382d3a55-871d-4527-a7ae-31a3b86c16f8",
