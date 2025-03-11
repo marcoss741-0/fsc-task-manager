@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDeleteTasks } from "../hooks/data/use-delete-tasks";
 import { useUpdateTask } from "../hooks/data/use-update-task";
 import { tv } from "tailwind-variants";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TaskItem = ({ task }) => {
   const rowTask = tv({
@@ -31,10 +32,12 @@ const TaskItem = ({ task }) => {
   });
 
   const { mutate: deleteTask, isPending } = useDeleteTasks(task.id);
+  const queryClient = useQueryClient();
 
   const handleDeleteClick = async () => {
     deleteTask(undefined, {
       onSuccess: () => {
+        queryClient.invalidateQueries(["tasks"]);
         toast.success("Tarefa excluida!", {
           style: { color: "orange" },
         });
