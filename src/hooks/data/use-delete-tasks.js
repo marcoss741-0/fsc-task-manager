@@ -15,7 +15,7 @@ export function useDeleteTasks(taskId) {
         return oldTasks.filter((oldTask) => oldTask.id !== deletedTask.id);
       });
 
-      // return deletedTask;
+      return deletedTask;
     },
   });
 }
