@@ -37,10 +37,10 @@ const TaskItem = ({ task }) => {
   const handleDeleteClick = async () => {
     deleteTask(undefined, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["tasks"]);
         toast.success("Tarefa excluida!", {
           style: { color: "orange" },
         });
+        queryClient.invalidateQueries(["tasks"]);
       },
       onError: () => {
         toast.error("Erro ao deletar tarefa, tente novamente!", {
